@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport1" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -32,6 +32,47 @@
         width: 70%;
         height: auto;
         margin-bottom: 10px;
+        max-width: 100%;
+    }
+    
+    /* 移动端适配 */
+    @media (max-width: 768px) {
+        body {
+            padding: 10px;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        .resume {
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 1.5em;
+            padding-bottom: 8px;
+        }
+        
+        img {
+            width: 95%;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        body {
+            padding: 5px;
+        }
+        
+        .resume {
+            padding: 15px;
+        }
+        
+        h1 {
+            font-size: 1.3em;
+        }
+        
+        img {
+            width: 100%;
+            margin-bottom: 15px;
+        }
     }
 </style>
 </head>

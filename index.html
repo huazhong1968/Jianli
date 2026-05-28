@@ -8,6 +8,9 @@
     <meta http-equiv="Expires" content="0">
     <title>个人简历 - 徐玉华</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
@@ -20,20 +23,44 @@
         .resume {
             background-color: #fff;
             padding: 40px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
         }
         h1 {
             color: #2c3e50;
             border-bottom: 2px solid #3498db;
             padding-bottom: 10px;
+            margin-bottom: 15px;
         }
         h2 {
             color: #3498db;
-            margin-top: 20px;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #eee;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-bottom: 8px;
         }
         .section {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+        }
+        .profile-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+        .profile-photo {
+            width: 120px;
+            height: auto;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+        .profile-info {
+            flex: 1;
+            line-height: 1.8;
         }
         .skill-list {
             display: flex;
@@ -43,76 +70,130 @@
         .skill {
             background-color: #3498db;
             color: #fff;
-            padding: 5px 10px;
-            border-radius: 3px;
+            padding: 6px 14px;
+            border-radius: 4px;
             font-size: 0.9em;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+            cursor: default;
+        }
+        a.skill {
+            cursor: pointer;
+        }
+        .skill:hover {
+            background-color: #2980b9;
+            text-decoration: none;
         }
         .contact-info {
             display: flex;
-            justify-content: space-between;
             flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        .contact-info span {
+            cursor: pointer;
+            color: #555;
+            font-size: 0.95em;
+        }
+        .contact-info span:hover {
+            color: #3498db;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .resume {
+                padding: 20px 15px;
+            }
+            .profile-row {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .profile-photo {
+                width: 150px;
+            }
+            .contact-info {
+                flex-direction: column;
+                gap: 8px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="resume">
-        <h1 style="color:" >徐玉华</h1>
+        <h1>徐玉华</h1>
         <div class="contact-info">
-            <span onclick="location.href='weixin://'"><img src="weixin.png" alt="微信" style="width:16px; height:16px;"> 微信：玉儿</span>
+            <span onclick="location.href='weixin://'"><img src="weixin.png" alt="微信" style="width:16px; height:16px; vertical-align:middle;"> 微信：玉儿</span>
             <span onclick="location.href='tel:17735155381'">📱 +86 177 3515 5381</span>
             <span onclick="location.href='https://map.baidu.com/?q=太原市晋源区'">🏠 太原市晋源区，山西省</span>
-           
         </div>
-       
 
         <div class="section">
-        
             <h2>个人简介</h2>
-            <div style="display: flex; align-items: flex-start;"><img src="xuyuhua-blue.jpg" alt="证件照" style="width: 35%; height: 35%; margin-right: 10px; vertical-align: top;"/><p>年龄：54岁 <br/>学历：大专  <br/>  婚姻：已婚  <br/>
-            家庭成员：3人 <br/>工作年限：5年 </p></div>
-            <p style="text-indent: 2em;" >我性格随和，待人真诚，始终保持自信。在工作中，我注重实干，乐于接受挑战，勤奋肯干，能够吃苦耐劳，愿意付出努力，以达到目标。我相信，勤劳和坚持会带来成功的成果。</p>
-            
-            
-            
+            <div class="profile-row">
+                <img src="xuyuhua-blue.jpg" alt="证件照" class="profile-photo"/>
+                <div class="profile-info">
+                    年龄：54岁<br/>
+                    学历：大专<br/>
+                    婚姻：已婚<br/>
+                    家庭成员：3人<br/>
+                    工作年限：5年
+                </div>
+            </div>
+            <p style="text-indent: 2em;">我性格随和，待人真诚，始终保持自信。在工作中，我注重实干，乐于接受挑战，勤奋肯干，能够吃苦耐劳，愿意付出努力，以达到目标。我相信，勤劳和坚持会带来成功的成果。</p>
         </div>
 
         <div class="section">
             <h2>技能</h2>
             <div class="skill-list">
-                <span class="skill">做饭</span>
+                <a href="cooking-gallery.html" class="skill">做饭</a>
                 <span class="skill">育婴照护</span>
                 <span class="skill">卫生</span>
                 <span class="skill">家政</span>
                 <span class="skill">收纳</span>
                 <span class="skill">幼儿教育</span>
-                <span class="skill">烹饪</span>
+                <a href="cooking-gallery.html" class="skill">烹饪</a>
                 <span class="skill">营养</span>
             </div>
         </div>
 
         <div class="section">
             <h2>工作经验</h2>
-            <h3>职位名称 - 家政服务职业</h3>
-            <p>9点-17点</p>
+            <h3>家政服务职业</h3>
+            <p><strong>工作时间：</strong>9点-17点</p>
             <ul>
-                <li>能做一手的很好的家常菜</li>
-                <li>山西面食基本上可以满足</li>
-                <li>收到多数客户的优质好评</li>
+                <li>擅长烹饪各类家常菜</li>
+                <li>精通山西面食（刀削面、猫耳朵、炸酱面等）</li>
+                <li>注重营养搭配和菜品呈现</li>
+                <li>获得客户一致好评</li>
             </ul>
-            <p style="text-indent: 2em;"> 我能够熟练烹饪多种家常菜，尤其擅长山西面食，制作出色的刀削面、猫耳朵和炸酱面等，深受客户喜爱。我的料理不仅色香味俱佳，还注重健康与营养，赢得了许多顾客的好评。我始终相信，良好的食材和细致的烹饪会让每一餐都成为美好的享受。</p>
+            <p style="text-indent: 2em;">我能够熟练烹饪多种家常菜，尤其擅长山西面食，制作出色的刀削面、猫耳朵和炸酱面等，深受客户喜爱。我的料理不仅色香味俱佳，还注重健康与营养，赢得了许多顾客的好评。我始终相信，良好的食材和细致的烹饪会让每一餐都成为美好的享受。</p>
+            <p><a href="cooking-gallery.html" class="skill" style="display: inline-block; margin-top: 10px;">查看我的烹饪作品 →</a></p>
         </div>
 
         <div class="section">
             <h2>教育背景</h2>
-            <h3>学位 - 大专</h3>
-            <p>饮食与营养卫生</p>
+            <h3>大专学历</h3>
+            <p><strong>专业：</strong>饮食与营养卫生</p>
+            <p><strong>学习内容：</strong>食品营养学、烹饪技术、食品安全与卫生、膳食搭配等</p>
         </div>
         <div class="section">
             <h2>健康状况</h2>
+            <p>身体健康，无传染病史，定期体检。</p>
             <div class="skill-list">
-            <a href="tj-2026.html" class="skill">体检报告</a> 
-            <a href="Report/xyh2026.pdf" class="skill">pdf报告</a> 
-           
+                <a href="tj-2026.html" class="skill">2026年体检报告</a> 
+                <a href="tj-2025.html" class="skill">2025年体检报告</a> 
+                <a href="Report/xyh2026.pdf" class="skill">2026年PDF报告</a> 
+                <a href="Report/xyh2025.pdf" class="skill">2025年PDF报告</a>
             </div>
         </div>
         

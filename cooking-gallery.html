@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>烹饪展示 - 徐玉华</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.4;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #f4f4f4;
+        }
+        
+        .header {
+            background-color: transparent;
+            padding: 12px 20px;
+            border-radius: 5px;
+            box-shadow: none;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: none;
+            padding-bottom: 0;
+            text-align: left;
+            font-size: 1.3em;
+            margin: 0;
+        }
+        
+        .back-link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .gallery-container {
+            background-color: transparent;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: none;
+        }
+        
+        .image-viewer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .current-image {
+            width: 100%;
+            max-width: 800px;
+            max-height: 55vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: none;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .current-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .image-info {
+            text-align: center;
+            color: #666;
+            font-size: 0.85em;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            padding: 5px 14px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .nav-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .page-indicator {
+            font-size: 0.9em;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+        
+        .thumbnail-container {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            gap: 10px;
+            margin-top: 12px;
+            padding-top: 10px;
+            padding-bottom: 5px;
+            border-top: 1px solid #eee;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .thumbnail {
+            flex-shrink: 0;
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        
+        .thumbnail:hover {
+            transform: scale(1.05);
+            border-color: #3498db;
+        }
+        
+        .thumbnail.active {
+            border-color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+            
+            .header {
+                padding: 10px 15px;
+                margin-bottom: 8px;
+            }
+            
+            .gallery-container {
+                padding: 12px 10px;
+            }
+            
+            h1 {
+                font-size: 1.2em;
+            }
+            
+            .current-image {
+                max-height: 45vh;
+            }
+            
+            .nav-btn {
+                padding: 4px 10px;
+                font-size: 0.8em;
+            }
+            
+            .thumbnail-container {
+                gap: 6px;
+                margin-top: 8px;
+                padding-top: 8px;
+            }
+            
+            .thumbnail {
+                width: 60px;
+                height: 60px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            
+            .header {
+                padding: 8px 10px;
+            }
+            
+            .gallery-container {
+                padding: 8px;
+            }
+            
+            h1 {
+                font-size: 1em;
+            }
+            
+            .current-image {
+                max-height: 40vh;
+            }
+            
+            .nav-btn {
+                padding: 3px 8px;
+                font-size: 0.75em;
+            }
+            
+            .thumbnail {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>烹饪展示</h1>
+        <a href="index.html" class="back-link">← 返回简历</a>
+    </div>
+    
+    <div class="gallery-container">
+        <div class="image-viewer">
+            <img id="currentImage" class="current-image" src="" alt="烹饪图片">
+            <div id="imageInfo" class="image-info">图片 1 / 9</div>
+            
+            <div class="navigation">
+                <button id="prevBtn" class="nav-btn">上一张</button>
+                <span id="pageIndicator" class="page-indicator">第 1 页，共 9 页</span>
+                <button id="nextBtn" class="nav-btn">下一张</button>
+            </div>
+        </div>
+        
+        <div class="thumbnail-container" id="thumbnailContainer">
+            <!-- 缩略图将由JavaScript动态生成 -->
+        </div>
+    </div>
+    
+    <script>
+        // 烹饪图片列表
+        const cookingImages = [
+            'image/pr/01.jpg',
+            'image/pr/02.jpg',
+            'image/pr/03.jpg',
+            'image/pr/04.jpg',
+            'image/pr/05.jpg',
+            'image/pr/06.jpg',
+            'image/pr/07.jpg',
+            'image/pr/08.jpg',
+            'image/pr/09.jpg'
+        ];
+        
+        // 获取DOM元素
+        const currentImage = document.getElementById('currentImage');
+        const imageInfo = document.getElementById('imageInfo');
+        const pageIndicator = document.getElementById('pageIndicator');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const thumbnailContainer = document.getElementById('thumbnailContainer');
+        
+        // 当前图片索引
+        let currentIndex = 0;
+        
+        // 初始化页面
+        function initGallery() {
+            updateImage();
+            createThumbnails();
+            updateNavigation();
+        }
+        
+        // 更新当前显示的图片
+        function updateImage() {
+            currentImage.src = cookingImages[currentIndex];
+            currentImage.alt = '烹饪图片 ' + (currentIndex + 1);
+            imageInfo.textContent = '图片 ' + (currentIndex + 1) + ' / ' + cookingImages.length;
+            pageIndicator.textContent = '第 ' + (currentIndex + 1) + ' 页，共 ' + cookingImages.length + ' 页';
+            
+            // 更新缩略图激活状态
+            document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+                if (index === currentIndex) {
+                    thumb.classList.add('active');
+                } else {
+                    thumb.classList.remove('active');
+                }
+            });
+            
+            // 保存当前索引到本地存储
+            localStorage.setItem('cookingGalleryCurrentIndex', currentIndex);
+        }
+        
+        // 创建缩略图
+        function createThumbnails() {
+            thumbnailContainer.innerHTML = '';
+            
+            cookingImages.forEach((imageSrc, index) => {
+                const thumbnail = document.createElement('img');
+                thumbnail.src = imageSrc;
+                thumbnail.alt = '缩略图 ' + (index + 1);
+                thumbnail.className = 'thumbnail';
+                if (index === currentIndex) {
+                    thumbnail.classList.add('active');
+                }
+                
+                thumbnail.addEventListener('click', () => {
+                    currentIndex = index;
+                    updateImage();
+                    updateNavigation();
+                });
+                
+                thumbnailContainer.appendChild(thumbnail);
+            });
+        }
+        
+        // 更新导航按钮状态
+        function updateNavigation() {
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === cookingImages.length - 1;
+        }
+        
+        // 上一张图片
+        function prevImage() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateImage();
+                updateNavigation();
+            }
+        }
+        
+        // 下一张图片
+        function nextImage() {
+            if (currentIndex < cookingImages.length - 1) {
+                currentIndex++;
+                updateImage();
+                updateNavigation();
+            }
+        }
+        
+        // 键盘导航支持
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft') {
+                prevImage();
+            } else if (event.key === 'ArrowRight') {
+                nextImage();
+            }
+        });
+        
+        // 事件监听
+        prevBtn.addEventListener('click', prevImage);
+        nextBtn.addEventListener('click', nextImage);
+        
+        // 从本地存储恢复之前的浏览位置
+        const savedIndex = localStorage.getItem('cookingGalleryCurrentIndex');
+        if (savedIndex !== null) {
+            const index = parseInt(savedIndex);
+            if (!isNaN(index) && index >= 0 && index < cookingImages.length) {
+                currentIndex = index;
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initGallery);
+    </script>
+</body>
+</html>
