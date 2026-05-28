@@ -354,6 +354,26 @@
             }
         });
         
+        // 触摸滑动支持
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        currentImage.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        
+        currentImage.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    nextImage();
+                } else {
+                    prevImage();
+                }
+            }
+        }, { passive: true });
+        
         // 事件监听
         prevBtn.addEventListener('click', prevImage);
         nextBtn.addEventListener('click', nextImage);
