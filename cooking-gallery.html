@@ -356,16 +356,31 @@
         
         // 触摸滑动支持
         let touchStartX = 0;
-        let touchEndX = 0;
+        let touchStartY = 0;
+        let isSwiping = false;
         
-        currentImage.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
+        const imageViewer = document.querySelector('.image-viewer');
+        
+        imageViewer.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            isSwiping = false;
         }, { passive: true });
         
-        currentImage.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
+        imageViewer.addEventListener('touchmove', (e) => {
+            const diffX = Math.abs(e.touches[0].clientX - touchStartX);
+            const diffY = Math.abs(e.touches[0].clientY - touchStartY);
+            if (diffX > diffY && diffX > 10) {
+                isSwiping = true;
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        imageViewer.addEventListener('touchend', (e) => {
+            if (!isSwiping) return;
+            const touchEndX = e.changedTouches[0].clientX;
             const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > 50) {
+            if (Math.abs(diff) > 40) {
                 if (diff > 0) {
                     nextImage();
                 } else {
